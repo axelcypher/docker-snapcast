@@ -28,6 +28,13 @@ RUN git clone --recursive https://github.com/librespot-org/librespot.git src && 
     cd src && \
     cargo build --release && \
     mv librespot /usr/local/bin/librespot 
+    
+
+RUN git clone --recursive https://github.com/badaix/snapweb.git src && \
+    cd src && \
+    make && \
+    mv -R dist /output/dist/
+
 
 RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin snapcast && \
     mkdir -p /home/snapcast/.config && \
@@ -35,6 +42,7 @@ RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin snapcast && \
 USER snapcast
 
 EXPOSE 1704
+EXPOSE 1780
 
 VOLUME /data
 WORKDIR /data
