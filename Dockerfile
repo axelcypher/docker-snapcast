@@ -1,6 +1,6 @@
 FROM debian:9.2
 
-LABEL maintainer "opsxcq@strm.sh"
+LABEL maintainer "opsxcq@strm.sh | modified by axelcypher"
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -23,6 +23,11 @@ RUN git clone --recursive https://github.com/badaix/snapcast.git src && \
     make && \
     make installserver && \
     make installclient
+
+RUN git clone --recursive https://github.com/librespot-org/librespot.git src && \
+    cd src && \
+    cargo build --release && \
+    mv librespot /usr/local/bin/librespot 
 
 RUN useradd --system --uid 666 -M --shell /usr/sbin/nologin snapcast && \
     mkdir -p /home/snapcast/.config && \
